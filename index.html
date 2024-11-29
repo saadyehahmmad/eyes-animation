@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Eyes Follow Cursor</title>
+  <style>
+    body {
+      background: #282c34;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      color: white;
+      font-family: Arial, sans-serif;
+    }
+    .eyes-container {
+      position: relative;
+      display: flex;
+      gap: 50px;
+    }
+    .eye {
+      width: 100px;
+      height: 100px;
+      background: white;
+      border-radius: 50%;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+    .pupil {
+      width: 40px;
+      height: 40px;
+      background: black;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      transition: transform 0.1s linear;
+    }
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      text-align: center;
+      width: 100%;
+    }
+    a {
+      color: #61dafb;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="eyes-container">
+    <div class="eye">
+      <div class="pupil"></div>
+    </div>
+    <div class="eye">
+      <div class="pupil"></div>
+    </div>
+  </div>
+  <div class="footer">
+    Made with ❤️ by <a href="https://github.com/saadyehahmmad" target="_blank">Ahmad Sadieh</a>
+  </div>
+
+  <script>
+    document.addEventListener("mousemove", (event) => {
+      const eyes = document.querySelectorAll(".eye .pupil");
+      eyes.forEach((pupil) => {
+        const rect = pupil.getBoundingClientRect();
+        const eyeX = rect.left + rect.width / 2;
+        const eyeY = rect.top + rect.height / 2;
+
+        const angle = Math.atan2(event.pageY - eyeY, event.pageX - eyeX);
+        const distance = Math.min(rect.width / 4, rect.height / 4);
+
+        pupil.style.transform = `translate(-50%, -50%) translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px)`;
+      });
+    });
+  </script>
+</body>
+</html>
